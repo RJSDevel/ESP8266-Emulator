@@ -1,0 +1,8 @@
+
+build-debug
+lib
+bin
+
+.vs
+Debug
+x64
