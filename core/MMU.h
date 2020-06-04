@@ -2,24 +2,29 @@
 #include <cstdint>
 #include <vector>
 
-#include "Loader\FirmwareImage.h"
 #include "Memory\Memory.h"
 
 class MMU
 {
 public:
-	MMU(FirmwareImage* image);
+	MMU();
 	~MMU();
 
+	void AddRegion(Memory* memory);
+
 	void Store8(uint32_t address, char value);
+
 	void Store16(uint32_t address, short value);
+
 	void Store32(uint32_t address, int value);
 
-	char Load8(uint32_t address);
-	short Load16(uint32_t address);
-	int Load32(uint32_t address);
+	int8_t Load8(uint32_t address);
+
+	int16_t Load16(uint32_t address);
+
+	int32_t Load32(uint32_t address);
 
 private:
-	std::vector<Memory*> _memory;
+	Memory* FindRegion(uint32_t address);
 };
 

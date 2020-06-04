@@ -144,7 +144,7 @@ static Format FORMATS[] = {
 	/*RRRN_2r*/		Format(2, new Operand(REGISTER, 4, 4), new Operand(REGISTER, 4, 8)),
 	/*RRRN_disp*/	Format(2, new Operand(REGISTER, 4, 4), new Operand(MEMORY_INDEX, 4, 12, 2, new int[2]{ 4, 8 })),
 
-	/*RI6*/			Format(2, new Operand(REGISTER, 4, 8), new Operand(NO_SIGNEXT_RELATIVE_PC, 4, 12, 2, 4)),
+	/*RI6*/			Format(2, new Operand(REGISTER, 4, 8), new Operand(UNSIGN_RELATIVE_PC, 4, 12, 2, 4)),
 	/*RI7*/			Format(2, new Operand(REGISTER, 4, 8), new Operand(IMMEDIATE, 4, 12, 3, 4, movi_n))
 };
 

@@ -14,9 +14,6 @@
     <ClCompile Include="Command.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ESP8266Image.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Format.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -35,12 +32,12 @@
     <ClCompile Include="Method.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="RWsr.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ESP8266Image.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Format.h">
@@ -59,6 +56,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Method.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="RWsr.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

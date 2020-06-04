@@ -21,22 +21,22 @@
   <ItemGroup>
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CPU8266.cpp" />
-    <ClCompile Include="ESP8266Image.cpp" />
     <ClCompile Include="Format.cpp" />
     <ClCompile Include="Method.cpp" />
     <ClCompile Include="Intruction.cpp" />
     <ClCompile Include="Methods.cpp" />
     <ClCompile Include="Operand.cpp" />
+    <ClCompile Include="RWsr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h" />
     <ClInclude Include="CPU8266.h" />
-    <ClInclude Include="ESP8266Image.h" />
     <ClInclude Include="Format.h" />
     <ClInclude Include="Method.h" />
     <ClInclude Include="Intruction.h" />
     <ClInclude Include="Methods.h" />
     <ClInclude Include="Operand.h" />
+    <ClInclude Include="RWsr.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

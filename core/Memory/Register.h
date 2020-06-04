@@ -24,7 +24,7 @@ public:
 
 	}
 
-	const Register<T>& operator = (int other) {
+	const Register<T>& operator = (int32_t other) {
 		_value = other;
 		return *this;
 	}
@@ -66,14 +66,19 @@ public:
 		return *this;
 	}
 
-	const int operator - (const int other)
+	const uint32_t operator - (const int32_t other)
 	{
 		return _value - other;
 	}
 
-	const uint32_t operator - (const uint32_t other)
+	const uint32_t operator |= (const int32_t other)
 	{
-		return _value - other;
+		return _value |= other;
+	}
+
+	const uint32_t operator &= (const int32_t other)
+	{
+		return _value &= other;
 	}
 	
 	friend ostream& operator << (ostream &s, const Register<T> &reg) 

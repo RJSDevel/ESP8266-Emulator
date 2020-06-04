@@ -1,116 +1,119 @@
 #include "MMU.h"
 
 #include <iostream>
+#include <string>
+
+using namespace std;
+
+std::vector<Memory*> _memory;
 
 
-MMU::MMU(FirmwareImage* image)
+MMU::MMU()
 {
-	std::vector<shared_ptr<Segment>> segments = image->GetSegments();
-
-	for (std::vector<shared_ptr<Segment>>::iterator it = segments.begin(); it != segments.end(); ++it) {
-		_memory.push_back(new Memory((*it).get()));
-	}
-
-	_memory.push_back(new Memory(0x3FFE8000, 0x4000)); // dram0
-	_memory.push_back(new Memory(0x3FFC0000, 0x20000)); // uint32 mapping to the address it is located at. What is this?
-	_memory.push_back(new Memory(0x40200000, 0x100000)); // SPI Flash is mapped here.
 }
 
 MMU::~MMU()
 {
 }
 
-void MMU::Store8(uint32_t address, char value) {
+void MMU::AddRegion(Memory * memory)
+{
+	_memory.push_back(memory);
+}
 
-	cout << hex << "store8( address = " << address << ", value = " << value << " )" << endl;
 
+Memory * MMU::FindRegion(uint32_t address)
+{
 	for (std::vector<Memory*>::iterator it = _memory.begin(); it != _memory.end(); ++it) {
-		if ((*it)->_offset <= address && (*it)->_offset + (*it)->_size >= address)
+		if (address >= (*it)->GetAddress() && address <= (*it)->GetAddress() + (*it)->GetSize())
 		{
-			memcpy((*it)->_data + (address - (*it)->_offset), &value, sizeof(value));
-			return;
+			return *it;
 		}
 	}
 
-	cout << "store ERROR!!! - " << address << endl;
+	return 0;
+}
+
+void MMU::Store8(uint32_t address, char value) {
+	Memory* region = FindRegion(address);
+
+	if (region != 0)
+	{
+		cout << endl << hex << "store8( " << region->GetName() << ", address = " << address << ", value = " << value << " )" << endl << endl;
+		region->Write8(address - region->GetAddress(), value);
+		return;
+	}
+
+	cout << endl << "store8 ERROR!!! - " << address << endl << endl;
 }
 
 void MMU::Store16(uint32_t address, short value) {
+	Memory* region = FindRegion(address);
 
-	cout << hex << "store16( address = " << address << ", value = " << value << " )" << endl;
-
-	for (std::vector<Memory*>::iterator it = _memory.begin(); it != _memory.end(); ++it) {
-		if ((*it)->_offset <= address && (*it)->_offset + (*it)->_size >= address)
-		{
-			memcpy((*it)->_data + (address - (*it)->_offset), &value, sizeof(value));
-			return;
-		}
+	if (region != 0)
+	{
+		cout << endl << hex << "store16( " << region->GetName() << ", address = " << address << ", value = " << value << " )" << endl << endl;
+		region->Write16(address - region->GetAddress(), value);
+		return;
 	}
 
-	cout << "store ERROR!!! - " << address << endl;
+	cout << endl << "store16 ERROR!!! - " << address << endl << endl;
 }
 
 void MMU::Store32(uint32_t address, int value) {
+	Memory* region = FindRegion(address);
 
-	cout << hex << "store32( address = " << address << ", value = " << value << " )" << endl;
-
-	for (std::vector<Memory*>::iterator it = _memory.begin(); it != _memory.end(); ++it) {
-		if ((*it)->_offset <= address && (*it)->_offset + (*it)->_size >= address)
-		{
-			memcpy((*it)->_data + (address - (*it)->_offset), &value, sizeof(value));
-			return;
-		}
+	if (region != 0)
+	{
+		cout << endl << hex << "store32( " << region->GetName() << ", address = " << address << ", value = " << value << " )" << endl << endl;
+		region->Write32(address - region->GetAddress(), value);
+		return;
 	}
 
-	cout << "store ERROR!!! - " << address << endl;
+	cout << endl << "store32 ERROR!!! - " << address << endl << endl;
 }
 
-char MMU::Load8(uint32_t address) {
-	char value;
+int8_t MMU::Load8(uint32_t address) {
 
-	for (std::vector<Memory*>::iterator it = _memory.begin(); it != _memory.end(); ++it) {
-		if ((*it)->_offset <= address && (*it)->_offset + (*it)->_size >= address)
-		{
-			memcpy(&value, (*it)->_data + (address - (*it)->_offset), sizeof(value));
-			return value;
-		}
+	Memory* region = FindRegion(address);
+	if (region != 0)
+	{
+		return region->Read8(address - region->GetAddress());
 	}
 
-	cout << "load8 ERROR!!! - " << address << endl;
+	cout << endl << "load8 ERROR!!! - " << address << endl << endl;
 
-	return 0xDE;
+	return 0xFF;
 }
 
-short MMU::Load16(uint32_t address) {
-	short value;
+int16_t MMU::Load16(uint32_t address) {
 
-	for (std::vector<Memory*>::iterator it = _memory.begin(); it != _memory.end(); ++it) {
-		if ((*it)->_offset <= address && (*it)->_offset + (*it)->_size >= address)
-		{
-			memcpy(&value, (*it)->_data + (address - (*it)->_offset), sizeof(value));
-			cout << hex << "load16( address = " << address << ", value = " << value << " )" << endl;
-			return value;
-		}
+	Memory* region = FindRegion(address);
+	if (region != 0)
+	{
+		int16_t value = region->Read16(address - region->GetAddress());
+		cout << endl << hex << "load16( " << region->GetName() << ", address = " << address << ", value = " << value << " )" << endl << endl;
+		return value;
 	}
-
-	cout << "load16 ERROR!!! - " << address << endl;
-
-	return 0xDEAD;
-}
-
-int MMU::Load32(uint32_t address) {
-	int value;
-
-	for (std::vector<Memory*>::iterator it = _memory.begin(); it != _memory.end(); ++it) {
-		if ((*it)->_offset <= address && (*it)->_offset + (*it)->_size >= address)
-		{
-			memcpy(&value, (*it)->_data + (address - (*it)->_offset), sizeof(value));
-			//cout << hex << "load32( address = " << address << ", value = " << value << " )" << endl;
-			return value;
-		}
-	}
-
-	cout << "load32 ERROR!!! - " << address << endl;
 	
-	return 0xDEADDEAD;
+	cout << endl << "load16 ERROR!!! - " << address << endl << endl;
+
+	return 0xFFFF;
+}
+
+int32_t MMU::Load32(uint32_t address) {
+	
+	Memory* region = FindRegion(address);
+	if (region != 0)
+	{
+		int32_t value = region->Read32(address - region->GetAddress());
+
+		cout << endl << hex << "load32( " << region->GetName() << ", address = " << address << ", value = " << value << " )" << endl << endl;
+
+		return value;
+	}
+
+	cout << endl << "load32 ERROR!!! - " << address << endl << endl;
+	
+	return 0xFFFFFFFF;
 }

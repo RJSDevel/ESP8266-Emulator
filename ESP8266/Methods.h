@@ -232,12 +232,35 @@ public:
 	virtual void Execute(Command* cmd, CPU8266* cpu);
 };
 
+class L8ui : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class L16si : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class L16ui : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
 class Extui : public Method
 {
 public:
 	virtual void Execute(Command* cmd, CPU8266* cpu);
 };
 
+class Mov : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
 
 class Movi : public Method
 {
@@ -246,6 +269,18 @@ public:
 };
 
 class Or : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class Ret : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class Rsil : public Method
 {
 public:
 	virtual void Execute(Command* cmd, CPU8266* cpu);
@@ -269,6 +304,47 @@ public:
 	virtual void Execute(Command* cmd, CPU8266* cpu);
 };
 
+class Movnez : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class Mul16s : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class Mul16u : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class Mull : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class Nsau : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class S8i : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class S16i : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
 
 class S32i : public Method
 {
@@ -281,6 +357,13 @@ class Srli : public Method
 public:
 	virtual void Execute(Command* cmd, CPU8266* cpu);
 };
+
+class Sll : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
 
 class Slli : public Method
 {
@@ -300,9 +383,32 @@ public:
 	virtual void Execute(Command* cmd, CPU8266* cpu);
 };
 
+class Ssl : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class Ssr : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
 class Sub : public Method
 {
 public:
 	virtual void Execute(Command* cmd, CPU8266* cpu);
 };
 
+class Waiti : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};
+
+class Xor : public Method
+{
+public:
+	virtual void Execute(Command* cmd, CPU8266* cpu);
+};

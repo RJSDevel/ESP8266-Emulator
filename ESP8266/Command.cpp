@@ -29,6 +29,10 @@ void Command::Execute(CPU8266* cpu)
 {
 	if (_inst->_method)
 	{
+		if (cpu->pc == 0x40001081)
+		{
+			cin.get();
+		}
 		_inst->_method->Execute(this, cpu);
 	}
 	else

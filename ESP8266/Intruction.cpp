@@ -3,7 +3,7 @@
 #include "Method.h"
 
 
-Intruction::Intruction(std::string name, int opcode, int mask, FormatType format) {
+Intruction::Intruction(std::string name, uint32_t opcode, uint32_t mask, FormatType format) {
 	_name = name;
 	_opcode = opcode;
 	_mask = mask;
@@ -11,11 +11,11 @@ Intruction::Intruction(std::string name, int opcode, int mask, FormatType format
 	_format = &FORMATS[format];
 }
 
-Intruction::Intruction(std::string name, int opcode, int mask, FormatType format, Method* method) : Intruction(name, opcode, mask, format)
+Intruction::Intruction(std::string name, uint32_t opcode, uint32_t mask, FormatType format, Method* method) : Intruction(name, opcode, mask, format)
 {
 	_method = method;
 }
 
-bool Intruction::Match(int op) {
+bool Intruction::Match(uint32_t op) {
 	return (op & _mask) == _opcode;
 }

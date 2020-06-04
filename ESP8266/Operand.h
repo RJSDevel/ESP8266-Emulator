@@ -11,20 +11,20 @@ enum OperandType
 	MEMORY,
 	RELATIVE_PC,		// PC Relative address 
 	RELATIVE_SHIFT_PC,	// PC Relative address shift
-	NO_SIGNEXT_RELATIVE_PC,	// Хуй знает
+	UNSIGN_RELATIVE_PC,	// Хуй знает
 	MEMORY_INDEX
 };
 
 class OperandValue {
 public:
 	union Value {
-		char byte;
-		short word;
-		int dword;
+		int8_t byte;
+		int16_t word;
+		int32_t dword;
 	} value;
 
 	uint32_t reg;
-	uint32_t address;
+	int32_t address;
 };
 
 class Operand
@@ -32,40 +32,40 @@ class Operand
 public:
 	Operand();
 
-	Operand(OperandType type, int size);
+	Operand(OperandType type, int32_t size);
 
-	Operand(OperandType type, int size, int rshift);
+	Operand(OperandType type, int32_t size, int32_t rshift);
 
-	Operand(OperandType type, int size, int rshift, int(*xlate)(int));
+	Operand(OperandType type, int32_t size, int32_t rshift, int32_t(*xlate)(int32_t));
 
-	Operand(OperandType type, int size, int rshift, int vshift);
+	Operand(OperandType type, int32_t size, int32_t rshift, int32_t vshift);
 
-	Operand(OperandType type, int size, int rshift, int vshift, int regbase[2]);
+	Operand(OperandType type, int32_t size, int32_t rshift, int32_t vshift, int32_t regbase[2]);
 
-	Operand(OperandType type, int size, int rshift, bool signext);
+	Operand(OperandType type, int32_t size, int32_t rshift, bool signext);
 
-	Operand(OperandType type, int size, int rshift, short off);
+	Operand(OperandType type, int32_t size, int32_t rshift, short off);
 
-	Operand(OperandType type, int size, int rshift, bool signext, int vshift);
+	Operand(OperandType type, int32_t size, int32_t rshift, bool signext, int32_t vshift);
 
-	Operand(OperandType type, int size, int rshift, int size2, int rshift2);
+	Operand(OperandType type, int32_t size, int32_t rshift, int32_t size2, int32_t rshift2);
 
-	Operand(OperandType type, int size, int rshift, int size2, int rshift2, int(*xlate)(int));
+	Operand(OperandType type, int32_t size, int32_t rshift, int32_t size2, int32_t rshift2, int32_t(*xlate)(int32_t));
 
 	OperandValue* Parse(Command* cmd);
 
 	OperandType _type;
 
 private:
-	int _size = 0;
-	int _rshift = 0;
-	int _rshift2 = 0;
-	int _size2 = 0;
-	int _vshift = 0;
+	int32_t _size = 0;
+	int32_t _rshift = 0;
+	int32_t _rshift2 = 0;
+	int32_t _size2 = 0;
+	int32_t _vshift = 0;
 	bool _signext = false;
-	int(*_xlate)(int) = nullptr;
-	int *_regbase = nullptr;
+	int32_t(*_xlate)(int32_t) = nullptr;
+	int32_t *_regbase = nullptr;
 	short _off = 0;
 
-	int bitfield(int op, int size, int rshift);
+	int32_t bitfield(int32_t op, int32_t size, int32_t rshift);
 };

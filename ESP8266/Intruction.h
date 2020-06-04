@@ -9,15 +9,15 @@ class Method;
 
 class Intruction {
 public:
-	Intruction(std::string name, int opcode, int mask, FormatType format);
+	Intruction(std::string name, uint32_t opcode, uint32_t mask, FormatType format);
 
-	Intruction(std::string name, int opcode, int mask, FormatType format, Method* method);
+	Intruction(std::string name, uint32_t opcode, uint32_t mask, FormatType format, Method* method);
 
-	bool Match(int op);
+	bool Match(uint32_t op);
 
 	std::string _name;
-	int _opcode;
-	int _mask;
+	uint32_t _opcode;
+	uint32_t _mask;
 	Format* _format;
 	FormatType _type;
 	Method* _method;

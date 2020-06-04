@@ -1,21 +1,21 @@
 #pragma once
 
-#include "FirmwareImage.h"
+#include "MMU.h"
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <cstring>
+
 
 using namespace std;
 
-template<class T>
+
 class Loader
 {
 public:
-	Loader(FirmwareImage *image, const string imagePath): mImage(reinterpret_cast<T*>(image))
+	static Memory* load(MMU* mmu, const string name,  const string file, uint32_t address)
 	{
-		ifstream ifs(imagePath, ios::binary|ios::ate);
+		ifstream ifs(file, ios::binary|ios::ate);
 		
 		if (ifs.is_open()) {
 			std::streamoff size = ifs.tellg();
@@ -26,22 +26,15 @@ public:
 			ifs.read(buffer, size);		
 			ifs.close();
 			
-			cout << "Image size: " << size << endl;
-			
-			mImage->Load(buffer, size);
+			Memory* memory = new Memory(name, address, buffer, size);
+			mmu->AddRegion(memory);
+
+			delete buffer;
+
+			return memory;
 		} else {
-			cout << "Can't open file: " << imagePath << endl;
+			cout << "Can't open file: " << file << endl;
 		}
 	}
-	
-	~Loader() 
-	{
-		
-	};
-	
-	T* GetImage(){ return mImage; }
-	
-private:
-	T* mImage;
 };
 

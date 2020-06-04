@@ -27,7 +27,6 @@
   <ItemGroup>
     <ClInclude Include="CPU\CPU.h" />
     <ClInclude Include="Exception\Exception.h" />
-    <ClInclude Include="Loader\FirmwareImage.h" />
     <ClInclude Include="Loader\Loader.h" />
     <ClInclude Include="Memory\Memory.h" />
     <ClInclude Include="Memory\Register.h" />

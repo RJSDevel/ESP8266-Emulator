@@ -1,8 +1,11 @@
-
-build-debug
-lib
-bin
-
 .vs
 Debug
 x64
+core/Debug
+core/x64
+Emulator/Debug
+Emulator/x64
+Emulator/Debug
+Emulator/x64
+ESP8266/Debug
+ESP8266/x64

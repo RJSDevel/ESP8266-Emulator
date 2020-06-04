@@ -12,6 +12,5 @@ public:
 	~Method();
 
 	virtual void Execute(Command* cmd, CPU8266* cpu);
-
 };
 
