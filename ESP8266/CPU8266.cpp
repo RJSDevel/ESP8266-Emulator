@@ -115,9 +115,15 @@ bool CPU8266::Run(uint32_t entrypoint)
 						cout << blue;
 						break;
 					}
+					else if (cmd->_inst->_name == "j" || cmd->_inst->_name == "jx")
+					{
+						cout << yellow;
+						break;
+					}
 
 					cout << green;
 					break;
+				case RI6:
 				case RRI8_b:
 				case RRI8_bb:
 				case BRI8_imm:
